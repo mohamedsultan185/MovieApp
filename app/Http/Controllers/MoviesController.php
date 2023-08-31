@@ -16,19 +16,12 @@ class MoviesController extends Controller
     {
         $popularMovies = Http::withToken(config('services.tmdb.token'))
         ->get('https://api.themoviedb.org/3/movie/popular')
-        ->json()['results'];
-
-        $nowPlayingMovies = Http::withToken(config('services.tmdb.token'))
-        ->get('https://api.themoviedb.org/3/movie/now_playing')
-        ->json()['results'];
-
+        ->json('results');
         $genres = Http::withToken(config('services.tmdb.token'))
         ->get('https://api.themoviedb.org/3/genre/movie/list')
         ->json()['genres'];
-
-        $viewModel = new MoviesViewModel($popularMovies, $nowPlayingMovies, $genres);
-
-        return view('movies.index', compact('viewModel'));
+            // dump($genres);
+        return view('index' ,compact('popularMovies', 'genres'));
     }
 
     /**
@@ -60,7 +53,12 @@ class MoviesController extends Controller
      */
     public function show($id)
     {
-        //
+        $movie = Http::withToken(config('services.tmdb.token'))
+        ->get('https://api.themoviedb.org/3/movie/' . $id.'?append_to_response=credits,videos,images')
+        ->json();
+        // dump($movie);
+
+        return view('show',compact('movie'));
     }
 
     /**
