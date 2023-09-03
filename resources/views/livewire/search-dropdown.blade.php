@@ -1,3 +1,4 @@
+
 <div class="relative mt-3 md:mt-0" x-data="{ isOpen: true }" @click.away="isOpen = false">
     <input
         wire:model.debounce.500ms="search"
@@ -31,7 +32,7 @@
                     @foreach ($searchResults as $result)
                         <li class="border-b border-gray-700">
                             <a
-                                href="{{ route('movie.show', $result['id']) }}" class="block hover:bg-gray-700 px-3 py-3 flex items-center transition ease-in-out duration-150"
+                                href="{{ route('movies.show', $result['id']) }}" class="block hover:bg-gray-700 px-3 py-3 flex items-center transition ease-in-out duration-150"
                                 @if ($loop->last) @keydown.tab="isOpen = false" @endif
                             >
                             @if ($result['poster_path'])
